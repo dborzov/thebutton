@@ -10,9 +10,10 @@ db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
-    last_click = get_last_click()
+    last_click, last_clicker = get_last_click_and_clicker()
     delta = datetime.utcnow() - last_click
     return render_template('index.html', **locals())
+
 
 @app.route('/click', methods=['POST'])
 def click_thebutton():
@@ -26,11 +27,11 @@ def click_thebutton():
     return redirect('/')
 
 
-def get_last_click():
+def get_last_click_and_clicker():
     last_clicker = Clicker.query.order_by(desc(Clicker.clicked)).first()
     if last_clicker is None:
-        return start_time
-    return last_clicker.clicked
+        return start_time, None
+    return last_clicker.clicked, last_clicker.username
 
 
 class Clicker(db.Model):
