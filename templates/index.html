@@ -5,7 +5,8 @@
     <dt>{{ delta }}</dd>
 </dl>
 
-
 <form method="POST" action="/click">
+    <input name="username" placeholder="Your name" />
+    <input type="hidden" name="last_click" value="{{ last_click }}" />
     <input type="submit"/>
 <form>

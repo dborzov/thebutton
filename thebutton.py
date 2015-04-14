@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import desc
 
@@ -16,7 +16,13 @@ def index():
 
 @app.route('/click', methods=['POST'])
 def click_thebutton():
-    return render_template('clicked.html')
+    if request.form['last_click'] == get_last_click():
+        c = Clicker(
+            username=request.form['username'],
+            clicked=datetime.utcnow())
+        db.session.add(c)
+        db.session.commit()
+    return redirect('/')
 
 
 def get_last_click():
