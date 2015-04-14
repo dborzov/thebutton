@@ -11,7 +11,8 @@ db = SQLAlchemy(app)
 @app.route('/')
 def index():
     last_click = get_last_click()
-    return render_template('index.html')
+    delta = datetime.utcnow() - last_click
+    return render_template('index.html', **locals())
 
 @app.route('/click', methods=['POST'])
 def click_thebutton():
@@ -21,7 +22,7 @@ def click_thebutton():
 def get_last_click():
     last_clicker = Clicker.query.order_by(desc(Clicker.clicked)).first()
     if last_clicker is None:
-        return datetime.utcnow()
+        return start_time
     return last_clicker.clicked
 
 
@@ -33,4 +34,5 @@ class Clicker(db.Model):
 
 if __name__ == '__main__':
     db.create_all()
+    start_time = datetime.utcnow()
     app.run(debug=True)
