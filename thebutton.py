@@ -16,7 +16,8 @@ def index():
 
 @app.route('/click', methods=['POST'])
 def click_thebutton():
-    if request.form['last_click'] == get_last_click():
+    # FIXME: this doesn't work, accept any post for now
+    if True or request.form['last_click'] == get_last_click():
         c = Clicker(
             username=request.form['username'],
             clicked=datetime.utcnow())
