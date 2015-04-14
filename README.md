@@ -10,7 +10,7 @@ Last click: the time that the button was last clicked by another user
 
 Last clicker: the name of the user that last clicked the button
 
-Current time: the difference between the current time and the last click
+Current time: time since the last click time
 (refresh the page to update this time)
 
 Your name: enter your name here before clicking the button
