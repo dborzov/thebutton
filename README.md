@@ -30,3 +30,5 @@ resetting current time: when another user clicks reset the current time,
 last click and last clicker information displayed in other browser windows
 
 clicker API: create a simple API for this application
+
+fix bugs, make more awesome
