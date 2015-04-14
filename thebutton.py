@@ -24,10 +24,14 @@ def click_thebutton():
             clicked=datetime.utcnow())
         db.session.add(c)
         db.session.commit()
+    # FIXME: handle and report errors
     return redirect('/')
 
 
 def get_last_click_and_clicker():
+    """
+    Return (last click time, username of last clicker)
+    """
     last_clicker = Clicker.query.order_by(desc(Clicker.clicked)).first()
     if last_clicker is None:
         return start_time, None
@@ -35,6 +39,9 @@ def get_last_click_and_clicker():
 
 
 class Clicker(db.Model):
+    """
+    Record the clicker's name and time they clicked the button
+    """
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
     clicked = db.Column(db.DateTime)
