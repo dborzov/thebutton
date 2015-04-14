@@ -4,6 +4,8 @@ thebutton is a simple flask web site that allows users to click a button
 
 ## Interface
 
+![Interface](screenshot.png)
+
 Last click: the time that the button was last clicked by another user
 
 Last clicker: the name of the user that last clicked the button
