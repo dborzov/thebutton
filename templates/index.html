@@ -4,28 +4,39 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title> The Dima's Button for the interview at BoxKite</title>
-    <link rel="stylesheet" href="static/thebutton.css"></link>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="static/thebutton.css"></link>
     <script src="static/thebutton.js"></script>
 </head>
 <body>
-    <div class="landing">
-        <p>
-            Last click: {{ last_click }}<br/>
-            Last clicker: {{ last_clicker }}<br/>
-            Current time: <a id="timer"></a><br/>
-        </p>
-
-        <br><br>
-
-        <form>
-            <div class="form-group">
-                <input name="username" class="form-control" placeholder="Your name" />
-                <br>
-                <button  type="button" class="btn btn-warning btn-lg btn-block">
-                this is the button :)
-                </button>
+    <div class="landing container">
+        <div class="row">
+            <div class="col-xs-6 text-right">
+                Last clicker 
             </div>
-        <form>
+            <div class="col-xs-6">
+                <strong id="clicker-name"></strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 text-right">
+            Clicked in 
+            </div>
+            <div class="col-xs-6">
+                <strong id="timer"></strong>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <form>
+                <div class="form-group">
+                    <input name="username" class="form-control" placeholder="Your name" />
+                    <br>
+                    <button  type="button" class="btn btn-warning btn-lg btn-block">
+                    this is the button :)
+                    </button>
+                </div>
+            <form>
+        </div>
     </div>
 </body>

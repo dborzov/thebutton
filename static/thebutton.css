@@ -1,3 +1,7 @@
+body {
+    background-color: #9fc7e0;
+}
+
 .landing {
     padding: 30px;
     margin-top: 50px;
@@ -6,8 +10,8 @@
     max-width: 300px;
     background-color: #ff6780;
     color: #ffffff;
-    border: 10px solid #a37ab7;
-    border-radius: 25px;
+    border: 20px solid #a37ab7;
+    border-radius: 35px;
 }
 
 
