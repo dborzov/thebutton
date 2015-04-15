@@ -26,15 +26,17 @@ def update():
 
 @app.route('/click', methods=['POST'])
 def click_thebutton():
-    # FIXME: this doesn't work, accept any post for now
-    if True or request.form['last_click'] == get_last_click():
-        c = Clicker(
-            username=request.form['username'],
-            clicked=datetime.utcnow())
-        db.session.add(c)
-        db.session.commit()
+    button_click = request.get_json()
+    if "username" not in button_click or Clicker.query.filter_by(username=button_click["username"]).first():
+        # user with such a username already clicked
+        return "User with such a name already exists"
+    c = Clicker(
+        username=button_click['username'],
+        clicked=datetime.utcnow())
+    db.session.add(c)
+    db.session.commit()
     # FIXME: handle and report errors
-    return redirect('/')
+    return ":)"
 
 
 def get_last_click_and_clicker():
