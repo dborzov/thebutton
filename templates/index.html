@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title> The Dima's Button for the interview at BoxKite</title>
     <link rel="stylesheet" href="static/thebutton.css"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
     <script src="static/thebutton.js"></script>
 </head>
 <body>
@@ -15,10 +16,16 @@
             Current time: {{ delta }}<br/>
         </p>
 
-        <form method="POST" action="/click">
-            <input name="username" placeholder="Your name" />
-            <input type="hidden" name="last_click" value="{{ last_click }}" />
-            <input type="submit"/>
+        <br><br>
+
+        <form>
+            <div class="form-group">
+                <input name="username" class="form-control" placeholder="Your name" />
+                <br>
+                <button  type="button" class="btn btn-warning btn-lg btn-block">
+                this is the button :)
+                </button>
+            </div>
         <form>
     </div>
 </body>
