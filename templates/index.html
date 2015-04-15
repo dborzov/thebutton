@@ -8,15 +8,17 @@
     <script src="static/thebutton.js"></script>
 </head>
 <body>
-    <p>
-        Last click: {{ last_click }}<br/>
-        Last clicker: {{ last_clicker }}<br/>
-        Current time: {{ delta }}<br/>
-    </p>
+    <div class="landing">
+        <p>
+            Last click: {{ last_click }}<br/>
+            Last clicker: {{ last_clicker }}<br/>
+            Current time: {{ delta }}<br/>
+        </p>
 
-    <form method="POST" action="/click">
-        <input name="username" placeholder="Your name" />
-        <input type="hidden" name="last_click" value="{{ last_click }}" />
-        <input type="submit"/>
-    <form>
+        <form method="POST" action="/click">
+            <input name="username" placeholder="Your name" />
+            <input type="hidden" name="last_click" value="{{ last_click }}" />
+            <input type="submit"/>
+        <form>
+    </div>
 </body>
