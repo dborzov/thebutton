@@ -11,9 +11,7 @@ db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
-    last_click, last_clicker = get_last_click_and_clicker()
-    delta = datetime.utcnow() - last_click
-    return render_template('index.html', **locals())
+    return render_template('index.html')
 
 
 @app.route('/update.json')
