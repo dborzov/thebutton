@@ -15,10 +15,15 @@ def index():
     delta = datetime.utcnow() - last_click
     return render_template('index.html', **locals())
 
-@app.route('/update')
+
+@app.route('/update.json')
 def update():
     last_click, last_clicker = get_last_click_and_clicker()
-    return json.dumps({"lastClick": last_click.isoformat(), "lastClicker": last_clicker})
+    delta = datetime.utcnow() - last_click
+    return json.dumps({
+        "lastClick": delta.seconds,
+        "lastClicker": last_clicker
+    })
 
 
 @app.route('/click', methods=['POST'])
