@@ -3,6 +3,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import desc
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
@@ -13,6 +14,11 @@ def index():
     last_click, last_clicker = get_last_click_and_clicker()
     delta = datetime.utcnow() - last_click
     return render_template('index.html', **locals())
+
+@app.route('/update')
+def update():
+    last_click, last_clicker = get_last_click_and_clicker()
+    return json.dumps({"lastClick": last_click.isoformat(), "lastClicker": last_clicker})
 
 
 @app.route('/click', methods=['POST'])
