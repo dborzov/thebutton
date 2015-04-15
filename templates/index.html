@@ -1,11 +1,23 @@
-<p>
-    Last click: {{ last_click }}<br/>
-    Last clicker: {{ last_clicker }}<br/>
-    Current time: {{ delta }}<br/>
-</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title> Dima's Button for the interview at BoxKite</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="thebutton.css"></link>
+</head>
+<body>
 
-<form method="POST" action="/click">
-    <input name="username" placeholder="Your name" />
-    <input type="hidden" name="last_click" value="{{ last_click }}" />
-    <input type="submit"/>
-<form>
+    <p>
+        Last click: {{ last_click }}<br/>
+        Last clicker: {{ last_clicker }}<br/>
+        Current time: {{ delta }}<br/>
+    </p>
+
+    <form method="POST" action="/click">
+        <input name="username" placeholder="Your name" />
+        <input type="hidden" name="last_click" value="{{ last_click }}" />
+        <button><input type="submit"/></button>
+    <form>
+</body>
