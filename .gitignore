@@ -1,0 +1,11 @@
+# Python's precompiled stuff
+*.py[cod~]
+
+__pycache__
+
+# Python's virtual environment dir 
+venv
+
+
+# MacOS's Finder's garbage
+.DS_Store
