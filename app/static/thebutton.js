@@ -75,7 +75,7 @@
         syncUp(panel, new XMLHttpRequest());
         exports.setInterval(function() {
             syncUp(panel, new XMLHttpRequest());
-        },500);
+        },5000);
 
         panel.thebutton.onclick = function() {
             thebuttonClick(panel, new XMLHttpRequest());
