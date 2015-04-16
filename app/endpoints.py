@@ -16,7 +16,7 @@ def index():
 def update():
     status = {}
     status["mostRecentClick"] = Clicker.recent_clicker().to_dict()
-    status["leaderboard"] = [cl.to_dict() for cl in Clicker.query.order_by(desc(Clicker.score)).all()]
+    status["leaderboard"] = [cl.to_dict() for cl in Clicker.query.order_by(desc(Clicker.score)).limit(10)]
     if "username" in session:
         status["alreadyClicked"] = True
         status["username"] = session["username"]
