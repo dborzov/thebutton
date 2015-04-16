@@ -1,5 +1,7 @@
 ;(function(exports) {
     var panel = {};
+
+    // syncUp syncs up the info on the most recent click 
     var syncUp = function() {
         var request = new XMLHttpRequest();
         request.onload = function(data) {
@@ -10,6 +12,7 @@
         request.send();
     };
 
+
     exports.onload = function() {
         panel = {
             timer: document.getElementById("timer"),
@@ -17,6 +20,8 @@
         };
 
         console.log("thebutton.js loaded");
+
+        // update the info and set up periodic calls to sync up the changes
         syncUp();
         exports.setInterval(syncUp,500);
     };
