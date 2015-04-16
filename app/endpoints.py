@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect
-from app import app
+from app import app, db
 from app.models import Clicker
+from datetime import datetime
 
 @app.route('/')
 def index():

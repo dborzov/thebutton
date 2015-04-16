@@ -17,9 +17,9 @@
         var request = new XMLHttpRequest();
         request.open("POST", "/click", true);
         request.setRequestHeader("Content-type","application/json");
-        request.send({
+        request.send(JSON.stringify({
             username: panel.input.value
-        });
+        }));
     }
 
     exports.onload = function() {
@@ -34,7 +34,7 @@
 
         // update the info and set up periodic calls to sync up the changes
         syncUp();
-        exports.setInterval(syncUp,50000);
+        exports.setInterval(syncUp,500);
         panel.thebutton.onclick = thebuttonClick;
 
     };
