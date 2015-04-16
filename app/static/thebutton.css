@@ -34,3 +34,7 @@ button {
     border-radius: 15px;
     background-color: #ffafaf;
 }
+
+input{
+   text-align:center;
+}
