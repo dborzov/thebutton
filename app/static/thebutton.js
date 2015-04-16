@@ -6,7 +6,7 @@
             panel.timer.innerText = JSON.parse(data.target.responseText).time;
             panel.username.innerText = JSON.parse(data.target.responseText).name;
         };
-        request.open("GET", "/update.json", true);
+        request.open("GET", "/status.json", true);
         request.send();
     };
 

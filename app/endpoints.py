@@ -7,7 +7,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/update.json')
+@app.route('/status.json')
 def update():
     return Clicker.recent_clicker()
 
