@@ -3,12 +3,22 @@
     // Panel class is a wrapper around DOM elements
     // that show status (with things like the most recent click and so on)
     // with some helper methods
-    var Panel = function(DOMelements) {
-        this.prototype = DOMelements;
-        this.update = function(statusJson) {
-            panel.timer.innerText = statusJSON.time;
-            panel.clickerName.innerText = statusJSON.name;
+    function Panel(DOMelements) {
+        this.update = function(statusJSON) {
+            this.timer.innerText = statusJSON.time;
+            this.clickerName.innerText = statusJSON.name;
         };
+        this.updatingFailed = function() {
+            this.timer.innerText = ":P";
+            this.clickerName.innerText = ":P";
+        };
+
+        for (var prop in DOMelements) {
+            if (!DOMelements.hasOwnProperty(prop)) {
+                continue
+            }
+            this[prop] = DOMelements[prop];
+        }
     };
 
 
@@ -17,6 +27,9 @@
         syncRequest.onload = function(data) {
             panel.update(JSON.parse(data.target.responseText));
         };
+        syncRequest.onerror = function() {
+            panel.updatingFailed();
+        }
         syncRequest.open("GET", "/status.json", true);
         syncRequest.send();
     };
@@ -32,7 +45,7 @@
     }
 
     exports.onload = function() {
-        panel = Panel({
+        var panel = new Panel({
             timer: document.getElementById("timer"),
             clickerName: document.getElementById("clicker-name"),
             thebutton: document.getElementById("thebutton"),
