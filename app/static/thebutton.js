@@ -79,6 +79,8 @@
             panel.failedClick.style.display = "none";
             if (data.target.status !=200) {
                 panel.clickFail(JSON.parse(data.target.responseText));
+            } else {
+                panel.update(JSON.parse(data.target.responseText));
             }
         }
 
@@ -104,7 +106,6 @@
             input: document.getElementById("username")
         });
 
-        console.log("thebutton.js loaded");
 
         // update the info and set up periodic calls to sync up the changes
         syncUp(panel, new XMLHttpRequest());
