@@ -16,6 +16,8 @@ def update():
 @app.route('/click', methods=['POST'])
 def click_thebutton():
     button_click = request.get_json()
+    if not button_click:
+        return "Gotta send json"
     if "username" not in button_click or Clicker.query.filter_by(username=button_click["username"]).first():
         # user with such a username already clicked
         return "User with such a name already exists"
