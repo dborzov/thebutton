@@ -20,7 +20,7 @@ class Clicker(db.Model):
 
     def to_dict(self):
         return {
-            "time": self.score,
+            "score": self.score,
             "name": self.username
         }
 

@@ -24,10 +24,15 @@
             leaderboardHTML = "";
             for (var i=0; i<statusJSON.leaderboard.length; i++) {
                 leaderboardHTML += "<tr><td>" + statusJSON.leaderboard[i].name + 
-                            "</td><td>" + statusJSON.leaderboard[i].time +
+                            "</td><td>" + statusJSON.leaderboard[i].score +
                             "</td></tr>";
             }
             this.leaderboard.innerHTML = leaderboardHTML;
+        };
+
+        this.clickFail = function(error) {
+            this.failedClick.innerText = "Ooops, that did not work. " + error.error;
+            this.failedClick.style.display = "block";
         };
 
         this.updatingFailed = function() {
@@ -70,6 +75,13 @@
     // thebuttonClick is the callback for button being clicked: it hides the button 
     // to prevent double clicks and sends the post request reporting the click
     var thebuttonClick = function(panel, clickRequest) {
+        clickRequest.onload = function(data) {
+            panel.failedClick.style.display = "none";
+            if (data.target.status !=200) {
+                panel.clickFail(JSON.parse(data.target.responseText));
+            }
+        }
+
         clickRequest.open("POST", "/click", true);
         panel.disableButton();
         clickRequest.setRequestHeader("Content-type","application/json");
@@ -81,6 +93,7 @@
     exports.onload = function() {
         var panel = new Panel({
             alert: document.getElementById("server-down-alert"),
+            failedClick: document.getElementById("failed-click-alert"),
             statusPanel: document.getElementById("status-panel"),
             scorePanel: document.getElementById("score-panel"),
             score: document.getElementById("score"),

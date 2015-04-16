@@ -15,7 +15,10 @@ def index():
 @app.route('/status.json')
 def update():
     status = {}
-    status["mostRecentClick"] = Clicker.recent_clicker().to_dict()
+    recent_clicker = Clicker.recent_clicker()
+    status["mostRecentClick"] = recent_clicker.to_dict()
+    diff = datetime.utcnow() - recent_clicker.clicked
+    status["mostRecentClick"]["time"] = diff.seconds
     status["leaderboard"] = [cl.to_dict() for cl in Clicker.query.order_by(desc(Clicker.score)).limit(10)]
     if "username" in session:
         status["alreadyClicked"] = True
@@ -29,13 +32,17 @@ def update():
 def click_thebutton():
     button_click = request.get_json()
     if not button_click:
-        return abort(400, 'Broken request: must send JSON with properties in the payload')
+        abort(400, 'Broken request: must send JSON with properties in the payload')
     if "username" not in button_click or \
         not isinstance(button_click['username'], (str, unicode)) or\
         len(button_click['username']) == 0:
-        return abort(400, 'Broken request: the JSON does not seem to be formatted properly')
+        abort(400, 'Broken request: the JSON does not seem to be formatted properly')
+
+    for sym in "<>;#=:/\\'\"":
+        if sym in button_click["username"]:
+            abort(400, 'Bad name: Forbidden symbol within the username: %s' % sym)
     if Clicker.query.filter_by(username=button_click["username"]).first():
-        return abort(400, 'Broken request: there was already a registered click with such a username')
+        abort(400, 'Bad name: there was already a registered click with such a username')
 
     prev = Clicker.recent_clicker()
     now = datetime.utcnow()
@@ -50,7 +57,7 @@ def click_thebutton():
     session["already_clicked"] = True
     session["username"] = button_click['username']
     session["score"] = timediff.seconds
-    return jsonify(c.to_dict())
+    return update()
 
 
 @app.errorhandler(400)
