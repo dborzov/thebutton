@@ -3,6 +3,7 @@ from sqlalchemy import desc
 import json
 
 from app import db
+from app.utils import jsonify
 
 
 class Clicker(db.Model):
@@ -16,7 +17,7 @@ class Clicker(db.Model):
 
     def to_dict(self):
         delta = datetime.utcnow() - self.clicked
-        return json.dumps({
+        return jsonify({
             "time": delta.seconds,
             "name": self.username
         })

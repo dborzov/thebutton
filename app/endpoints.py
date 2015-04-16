@@ -1,6 +1,7 @@
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, abort
 from app import app, db
 from app.models import Clicker
+from app.utils import jsonify
 from datetime import datetime
 
 @app.route('/')
@@ -18,7 +19,7 @@ def update():
 def click_thebutton():
     button_click = request.get_json()
     if not button_click:
-        return "Gotta send json"
+        return abort(400, 'Broken request: must send JSON with properties in the payload')
     if "username" not in button_click or Clicker.query.filter_by(username=button_click["username"]).first():
         # user with such a username already clicked
         return "User with such a name already exists"
@@ -28,4 +29,9 @@ def click_thebutton():
     db.session.add(c)
     db.session.commit()
     # FIXME: handle and report errors
-    return ":)"
+    return c.to_dict()
+
+
+@app.errorhandler(400)
+def custom400(error):
+    return jsonify({"error":error.description})
