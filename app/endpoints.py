@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, abort
+from flask import render_template, session, request, redirect, abort
 from app import app, db
 from app.models import Clicker
 from app.utils import jsonify
@@ -11,7 +11,13 @@ def index():
 
 @app.route('/status.json')
 def update():
-    return Clicker.recent_clicker()
+    status = {}
+    status["mostRecentClick"] = Clicker.recent_clicker().to_dict()
+    if "username" in session:
+        status["alreadyClicked"] = True
+        status["username"] = session["username"]
+
+    return jsonify(status)
 
 
 
@@ -32,7 +38,11 @@ def click_thebutton():
         clicked=datetime.utcnow())
     db.session.add(c)
     db.session.commit()
-    return c.to_dict()
+
+    session["already_clicked"] = True
+    session["username"] = button_click['username']
+
+    return jsonify(c.to_dict())
 
 
 @app.errorhandler(400)

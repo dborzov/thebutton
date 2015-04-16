@@ -3,7 +3,6 @@ from sqlalchemy import desc
 import json
 
 from app import db
-from app.utils import jsonify
 
 
 class Clicker(db.Model):
@@ -17,9 +16,10 @@ class Clicker(db.Model):
 
     def to_dict(self):
         delta = datetime.utcnow() - self.clicked
-        return jsonify({
+        return {
             "time": delta.seconds,
-            "name": self.username})
+            "name": self.username
+        }
 
 
     @staticmethod
@@ -27,4 +27,4 @@ class Clicker(db.Model):
         recent = Clicker.query.order_by(desc(Clicker.clicked)).first()
         if recent is None:
             return {}
-        return recent.to_dict()
+        return recent

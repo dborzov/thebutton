@@ -7,10 +7,17 @@
         this.update = function(statusJSON) {
             this.statusPanel.style.display = "block";
             this.alert.style.display = "none";
-            this.enableButton();
-            this.timer.innerText = statusJSON.time;
-            this.clickerName.innerText = statusJSON.name;
+            if (statusJSON["alreadyClicked"]) {
+                this.input.value = statusJSON["username"];
+                this.thebutton.innerText = "You clicked the button!";
+                this.disableButton();
+            } else {
+                this.enableButton();
+            }
+            this.timer.innerText = statusJSON.mostRecentClick.time;
+            this.clickerName.innerText = statusJSON.mostRecentClick.name;
         };
+
         this.updatingFailed = function() {
             this.alert.style.display = "block";
             this.statusPanel.style.display = "none";
@@ -75,7 +82,7 @@
         syncUp(panel, new XMLHttpRequest());
         exports.setInterval(function() {
             syncUp(panel, new XMLHttpRequest());
-        },5000);
+        },500);
 
         panel.thebutton.onclick = function() {
             thebuttonClick(panel, new XMLHttpRequest());
