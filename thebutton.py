@@ -1,13 +1,8 @@
-from datetime import datetime
-
-from flask import Flask, render_template, request, redirect
-from flask.ext.sqlalchemy import SQLAlchemy
-from sqlalchemy import desc
+from flask import render_template, request, redirect
+from app import app, db
+from app.models import Clicker
 import json
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
@@ -16,12 +11,8 @@ def index():
 
 @app.route('/update.json')
 def update():
-    last_click, last_clicker = get_last_click_and_clicker()
-    delta = datetime.utcnow() - last_click
-    return json.dumps({
-        "lastClick": delta.seconds,
-        "lastClicker": last_clicker
-    })
+    return Clicker.recent_clicker()
+
 
 
 @app.route('/click', methods=['POST'])
@@ -39,26 +30,7 @@ def click_thebutton():
     return ":)"
 
 
-def get_last_click_and_clicker():
-    """
-    Return (last click time, username of last clicker)
-    """
-    last_clicker = Clicker.query.order_by(desc(Clicker.clicked)).first()
-    if last_clicker is None:
-        return start_time, None
-    return last_clicker.clicked, last_clicker.username
-
-
-class Clicker(db.Model):
-    """
-    Record the clicker's name and time they clicked the button
-    """
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
-    clicked = db.Column(db.DateTime)
-
 
 if __name__ == '__main__':
     db.create_all()
-    start_time = datetime.utcnow()
     app.run(debug=True)
