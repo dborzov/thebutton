@@ -17,8 +17,8 @@ class Clicker(db.Model):
     def to_dict(self):
         delta = datetime.utcnow() - self.clicked
         return json.dumps({
-            "lastClick": delta.seconds,
-            "lastClicker": self.username
+            "time": delta.seconds,
+            "name": self.username
         })
 
 
