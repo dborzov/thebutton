@@ -7,8 +7,9 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from secrets import SECRET_KEY
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.secret_key = SECRET_KEY
 db = SQLAlchemy(app)
+
 
 import endpoints

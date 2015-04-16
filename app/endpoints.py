@@ -16,7 +16,7 @@ def update():
     if "username" in session:
         status["alreadyClicked"] = True
         status["username"] = session["username"]
-
+        status["score"] = session["score"]
     return jsonify(status)
 
 
@@ -33,15 +33,19 @@ def click_thebutton():
     if Clicker.query.filter_by(username=button_click["username"]).first():
         return abort(400, 'Broken request: there was already a registered click with such a username')
 
+    prev = Clicker.recent_clicker()
+    now = datetime.utcnow()
+    timediff = now - prev.clicked
     c = Clicker(
-        username=button_click['username'],
-        clicked=datetime.utcnow())
+        username = button_click['username'],
+        clicked = now,
+        score = timediff.seconds)
     db.session.add(c)
     db.session.commit()
 
     session["already_clicked"] = True
     session["username"] = button_click['username']
-
+    session["score"] = timediff.seconds
     return jsonify(c.to_dict())
 
 

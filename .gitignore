@@ -9,3 +9,6 @@ venv
 
 # MacOS's Finder's garbage
 .DS_Store
+
+# Won't track sqlite db files
+*.db

@@ -8,10 +8,13 @@
             this.statusPanel.style.display = "block";
             this.alert.style.display = "none";
             if (statusJSON["alreadyClicked"]) {
+                this.scorePanel.style.display = "block";
                 this.input.value = statusJSON["username"];
                 this.thebutton.innerText = "You clicked the button!";
+                this.score.innerText = statusJSON["score"];
                 this.disableButton();
             } else {
+                this.scorePanel.style.display = "none";
                 this.enableButton();
             }
             this.timer.innerText = statusJSON.mostRecentClick.time;
@@ -70,6 +73,8 @@
         var panel = new Panel({
             alert: document.getElementById("server-down-alert"),
             statusPanel: document.getElementById("status-panel"),
+            scorePanel: document.getElementById("score-panel"),
+            score: document.getElementById("score"),
             timer: document.getElementById("timer"),
             clickerName: document.getElementById("clicker-name"),
             thebutton: document.getElementById("thebutton"),
