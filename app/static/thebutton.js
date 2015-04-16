@@ -7,12 +7,24 @@
         this.update = function(statusJSON) {
             this.statusPanel.style.display = "block";
             this.alert.style.display = "none";
+            this.enableButton();
             this.timer.innerText = statusJSON.time;
             this.clickerName.innerText = statusJSON.name;
         };
         this.updatingFailed = function() {
             this.alert.style.display = "block";
             this.statusPanel.style.display = "none";
+            this.disableButton();
+        };
+
+        this.disableButton = function() {
+            this.input.disabled = true;
+            this.thebutton.disabled = true;
+        };
+
+        this.enableButton = function() {
+            this.input.disabled = false;
+            this.thebutton.disabled = false;
         };
 
         for (var prop in DOMelements) {
@@ -40,6 +52,7 @@
     // to prevent double clicks and sends the post request reporting the click
     var thebuttonClick = function(panel, clickRequest) {
         clickRequest.open("POST", "/click", true);
+        panel.disableButton();
         clickRequest.setRequestHeader("Content-type","application/json");
         clickRequest.send(JSON.stringify({
             username: panel.input.value
