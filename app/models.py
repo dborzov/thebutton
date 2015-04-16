@@ -19,8 +19,7 @@ class Clicker(db.Model):
         delta = datetime.utcnow() - self.clicked
         return jsonify({
             "time": delta.seconds,
-            "name": self.username
-        })
+            "name": self.username})
 
 
     @staticmethod

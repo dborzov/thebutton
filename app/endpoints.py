@@ -20,8 +20,10 @@ def click_thebutton():
     button_click = request.get_json()
     if not button_click:
         return abort(400, 'Broken request: must send JSON with properties in the payload')
-    if "username" not in button_click:
-        return abort(400, 'Broken request: the JSON with props needs to have the submitted username')
+    if "username" not in button_click or \
+        not isinstance(button_click['username'], (str, unicode)) or\
+        len(button_click['username']) == 0:
+        return abort(400, 'Broken request: the JSON does not seem to be formatted properly')
     if Clicker.query.filter_by(username=button_click["username"]).first():
         return abort(400, 'Broken request: there was already a registered click with such a username')
 
