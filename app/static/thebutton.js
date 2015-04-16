@@ -1,23 +1,21 @@
 ;(function(exports) {
-    var panel = {};
 
     // syncUp syncs up the info on the most recent click 
-    var syncUp = function() {
-        var request = new XMLHttpRequest();
-        request.onload = function(data) {
+    var syncUp = function(panel, syncRequest) {
+        syncRequest.onload = function(data) {
             panel.timer.innerText = JSON.parse(data.target.responseText).time;
             panel.clickerName.innerText = JSON.parse(data.target.responseText).name;
         };
-        request.open("GET", "/status.json", true);
-        request.send();
+        syncRequest.open("GET", "/status.json", true);
+        syncRequest.send();
     };
 
-    var thebuttonClick = function() {
-        console.log("hello from theButtonClick");
-        var request = new XMLHttpRequest();
-        request.open("POST", "/click", true);
-        request.setRequestHeader("Content-type","application/json");
-        request.send(JSON.stringify({
+    // thebuttonClick is the callback for button being clicked: it hides the button 
+    // to prevent double clicks and sends the post request reporting the click
+    var thebuttonClick = function(panel, clickRequest) {
+        clickRequest.open("POST", "/click", true);
+        clickRequest.setRequestHeader("Content-type","application/json");
+        clickRequest.send(JSON.stringify({
             username: panel.input.value
         }));
     }
@@ -33,10 +31,14 @@
         console.log("thebutton.js loaded");
 
         // update the info and set up periodic calls to sync up the changes
-        syncUp();
-        exports.setInterval(syncUp,500);
-        panel.thebutton.onclick = thebuttonClick;
+        syncUp(panel, new XMLHttpRequest());
+        exports.setInterval(function() {
+            syncUp(panel, new XMLHttpRequest());
+        },500);
 
+        panel.thebutton.onclick = function() {
+            thebuttonClick(panel, new XMLHttpRequest());
+        }
     };
     
 })(this);
