@@ -19,9 +19,8 @@ class Clicker(db.Model):
 
 
     def to_dict(self):
-        delta = datetime.utcnow() - self.clicked
         return {
-            "time": delta.seconds,
+            "time": self.score,
             "name": self.username
         }
 

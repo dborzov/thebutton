@@ -19,6 +19,15 @@
             }
             this.timer.innerText = statusJSON.mostRecentClick.time;
             this.clickerName.innerText = statusJSON.mostRecentClick.name;
+
+
+            leaderboardHTML = "";
+            for (var i=0; i<statusJSON.leaderboard.length; i++) {
+                leaderboardHTML += "<tr><td>" + statusJSON.leaderboard[i].name + 
+                            "</td><td>" + statusJSON.leaderboard[i].time +
+                            "</td></tr>";
+            }
+            this.leaderboard.innerHTML = leaderboardHTML;
         };
 
         this.updatingFailed = function() {
@@ -78,6 +87,7 @@
             timer: document.getElementById("timer"),
             clickerName: document.getElementById("clicker-name"),
             thebutton: document.getElementById("thebutton"),
+            leaderboard: document.getElementById("leaderboard"),
             input: document.getElementById("username")
         });
 

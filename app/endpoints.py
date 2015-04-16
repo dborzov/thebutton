@@ -1,8 +1,11 @@
 from flask import render_template, session, request, redirect, abort
+from datetime import datetime
+from sqlalchemy import desc
+
 from app import app, db
 from app.models import Clicker
 from app.utils import jsonify
-from datetime import datetime
+
 
 @app.route('/')
 def index():
@@ -13,6 +16,7 @@ def index():
 def update():
     status = {}
     status["mostRecentClick"] = Clicker.recent_clicker().to_dict()
+    status["leaderboard"] = [cl.to_dict() for cl in Clicker.query.order_by(desc(Clicker.score)).all()]
     if "username" in session:
         status["alreadyClicked"] = True
         status["username"] = session["username"]
