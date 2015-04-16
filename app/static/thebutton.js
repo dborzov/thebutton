@@ -5,12 +5,14 @@
     // with some helper methods
     function Panel(DOMelements) {
         this.update = function(statusJSON) {
+            this.statusPanel.style.display = "block";
+            this.alert.style.display = "none";
             this.timer.innerText = statusJSON.time;
             this.clickerName.innerText = statusJSON.name;
         };
         this.updatingFailed = function() {
-            this.timer.innerText = ":P";
-            this.clickerName.innerText = ":P";
+            this.alert.style.display = "block";
+            this.statusPanel.style.display = "none";
         };
 
         for (var prop in DOMelements) {
@@ -46,6 +48,8 @@
 
     exports.onload = function() {
         var panel = new Panel({
+            alert: document.getElementById("server-down-alert"),
+            statusPanel: document.getElementById("status-panel"),
             timer: document.getElementById("timer"),
             clickerName: document.getElementById("clicker-name"),
             thebutton: document.getElementById("thebutton"),

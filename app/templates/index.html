@@ -10,20 +10,27 @@
 </head>
 <body>
     <div class="landing container">
-        <div class="row">
-            <div class="col-xs-6 text-right">
-                Last clicker 
-            </div>
-            <div class="col-xs-6">
-                <strong id="clicker-name"></strong>
-            </div>
+        <div class="alert alert-danger" id="server-down-alert" style="display:none;">
+            <strong>Oh snap!</strong>
+            <p> Error accessing server when attempting to update the data. 
+                Server must be down or something </p>
         </div>
-        <div class="row">
-            <div class="col-xs-6 text-right">
-            Clicked in 
+        <div id="status-panel">
+            <div class="row">
+                <div class="col-xs-6 text-right">
+                    Last clicker 
+                </div>
+                <div class="col-xs-6">
+                    <strong id="clicker-name"></strong>
+                </div>
             </div>
-            <div class="col-xs-6">
-                <strong id="timer"></strong>
+            <div class="row">
+                <div class="col-xs-6 text-right">
+                Clicked in 
+                </div>
+                <div class="col-xs-6">
+                    <strong id="timer"></strong>
+                </div>
             </div>
         </div>
         <br><br>
