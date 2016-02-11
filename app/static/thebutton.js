@@ -23,7 +23,7 @@
 
             leaderboardHTML = "";
             for (var i=0; i<statusJSON.leaderboard.length; i++) {
-                leaderboardHTML += "<tr><td>" + statusJSON.leaderboard[i].name + 
+                leaderboardHTML += "<tr><td>" + statusJSON.leaderboard[i].name +
                             "</td><td>" + statusJSON.leaderboard[i].score +
                             "</td></tr>";
             }
@@ -60,7 +60,7 @@
     };
 
 
-    // syncUp syncs up the info on the most recent click 
+    // syncUp syncs up the info on the most recent click
     var syncUp = function(panel, syncRequest) {
         syncRequest.onload = function(data) {
             panel.update(JSON.parse(data.target.responseText));
@@ -72,7 +72,7 @@
         syncRequest.send();
     };
 
-    // thebuttonClick is the callback for button being clicked: it hides the button 
+    // thebuttonClick is the callback for button being clicked: it hides the button
     // to prevent double clicks and sends the post request reporting the click
     var thebuttonClick = function(panel, clickRequest) {
         clickRequest.onload = function(data) {
@@ -111,11 +111,11 @@
         syncUp(panel, new XMLHttpRequest());
         exports.setInterval(function() {
             syncUp(panel, new XMLHttpRequest());
-        },500);
+        },5000);
 
         panel.thebutton.onclick = function() {
             thebuttonClick(panel, new XMLHttpRequest());
         }
     };
-    
+
 })(this);
