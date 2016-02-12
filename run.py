@@ -1,7 +1,5 @@
-from app import app, db
-from app.models import Clicker
+from app import app
 
 
 if __name__ == '__main__':
-    Clicker.initialize_db()
     app.run(debug=True)

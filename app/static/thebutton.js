@@ -18,6 +18,8 @@
                 this.enableButton();
             }
             this.timer.innerText = statusJSON.mostRecentClick.time;
+            console.log("nost recent clickers name:", statusJSON.mostRecentClick.name);
+            console.log("nost recent clickers names DOM element:", this.clickerName);
             this.clickerName.innerText = statusJSON.mostRecentClick.name;
 
 
